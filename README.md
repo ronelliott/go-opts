@@ -2,7 +2,7 @@
 
 [![GoDoc](https://godoc.org/github.com/ronelliott/go-opts?status.png)](https://godoc.org/github.com/ronelliott/go-opts)
 [![Build Status](https://travis-ci.org/ronelliott/go-opts.svg?branch=master)](https://travis-ci.org/ronelliott/go-opts)
-[![Coverage Status](https://img.shields.io/coveralls/ronelliott/go-opts.svg)](https://coveralls.io/r/ronelliott/go-opts?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ronelliott/go-opts/badge.svg?branch=master)](https://coveralls.io/github/ronelliott/go-opts?branch=master)
 
 a go library for parsing command line flags
 
