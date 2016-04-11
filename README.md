@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/ronelliott/go-opts.svg?branch=master)](https://travis-ci.org/ronelliott/go-opts)
 [![Coverage Status](https://coveralls.io/repos/github/ronelliott/go-opts/badge.svg?branch=master)](https://coveralls.io/github/ronelliott/go-opts?branch=master)
 
-a go library for parsing command line flags
+A go library for parsing command line flags. Only supports go versions newer than, or equal to, 1.5
 
 ## Installation
 
