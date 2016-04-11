@@ -58,8 +58,6 @@ func NewOption(fieldType reflect.StructField, fieldValue reflect.Value) (*Option
 
     if def == "" {
         // set the default to the current value
-    //     var ptr *[]string = opt.pointer.(*[]string)
-    //     *ptr = leftovers
         switch kind {
         case "bool":
             var ptr *bool = pointer.(*bool)
