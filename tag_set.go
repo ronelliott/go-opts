@@ -19,7 +19,7 @@ func NewTagSet(raw string) TagSet {
             continue
         }
 
-        if rune == ':' {
+        if rune == ':' && !in_value {
             in_key = false
             in_value = false
             continue

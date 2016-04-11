@@ -42,6 +42,17 @@ func TestNewTagSet_MultilineValue(t *testing.T) {
     assert.Equal(t, set["short"], "v")
 }
 
+func TestNewTagSet_ResourceUrls(t *testing.T) {
+    set := NewTagSet(`
+        long:"db"
+        default:"mongodb://localhost:27017/db"
+        description:"The db resource to connect to."`)
+    assert.Equal(t, 3, len(set))
+    assert.Equal(t, set["default"], "mongodb://localhost:27017/db")
+    assert.Equal(t, set["description"], "The db resource to connect to.")
+    assert.Equal(t, set["long"], "db")
+}
+
 func TestTagSetGet(t *testing.T) {
     set := NewTagSet(`default:"true"`)
     assert.Equal(t, set.Get("default"), "true")

@@ -39,6 +39,11 @@ type TestNewOptionStruct struct {
     Uint uint `long:"uint"`
 
     Uint64 uint64 `long:"uint64"`
+
+    Db string `
+        long:"db"
+        default:"mongodb://localhost:27017/db"
+        description:"The db resource to connect to."`
 }
 
 func optionTestGetFieldType(num int) reflect.StructField {
@@ -57,6 +62,14 @@ func TestNewOption_Default(t *testing.T) {
     opt, err := NewOption(optionTestGetFieldType(0), optionTestGetFieldValue(0))
     assert.Nil(t, err)
     assert.Equal(t, "true", opt.Default)
+}
+
+func TestNewOption_Default_ResourceUrls(t *testing.T) {
+    opt, err := NewOption(
+        optionTestGetFieldType(13),
+        optionTestGetFieldValue(13))
+    assert.Nil(t, err)
+    assert.Equal(t, "mongodb://localhost:27017/db", opt.Default)
 }
 
 func TestNewOption_Default_CurrentValue_Bool(t *testing.T) {
@@ -190,6 +203,14 @@ func TestNewOption_Description(t *testing.T) {
     opt, err := NewOption(optionTestGetFieldType(0), optionTestGetFieldValue(0))
     assert.Nil(t, err)
     assert.Equal(t, "Use verbose logging.", opt.Description)
+}
+
+func TestNewOption_Description_ResourceUrls(t *testing.T) {
+    opt, err := NewOption(
+        optionTestGetFieldType(13),
+        optionTestGetFieldValue(13))
+    assert.Nil(t, err)
+    assert.Equal(t, "The db resource to connect to.", opt.Description)
 }
 
 func TestNewOption_Help(t *testing.T) {
