@@ -90,11 +90,19 @@ func (this *Option) AddToFlagSet(set *flag.FlagSet) error {
         }
 
         if this.Short != "" {
-            set.BoolVar(this.pointer.(*bool), this.Short, def, "")
+            set.BoolVar(
+                this.pointer.(*bool),
+                this.Short,
+                def,
+                this.Description)
         }
 
         if this.Long != "" {
-            set.BoolVar(this.pointer.(*bool), this.Long, def, "")
+            set.BoolVar(
+                this.pointer.(*bool),
+                this.Long,
+                def,
+                this.Description)
         }
 
     case "float64":
@@ -109,11 +117,19 @@ func (this *Option) AddToFlagSet(set *flag.FlagSet) error {
         }
 
         if this.Short != "" {
-            set.Float64Var(this.pointer.(*float64), this.Short, def, "")
+            set.Float64Var(
+                this.pointer.(*float64),
+                this.Short,
+                def,
+                this.Description)
         }
 
         if this.Long != "" {
-            set.Float64Var(this.pointer.(*float64), this.Long, def, "")
+            set.Float64Var(
+                this.pointer.(*float64),
+                this.Long,
+                def,
+                this.Description)
         }
 
     case "int":
@@ -130,11 +146,19 @@ func (this *Option) AddToFlagSet(set *flag.FlagSet) error {
         }
 
         if this.Short != "" {
-            set.IntVar(this.pointer.(*int), this.Short, int(def), "")
+            set.IntVar(
+                this.pointer.(*int),
+                this.Short,
+                int(def),
+                this.Description)
         }
 
         if this.Long != "" {
-            set.IntVar(this.pointer.(*int), this.Long, int(def), "")
+            set.IntVar(
+                this.pointer.(*int),
+                this.Long,
+                int(def),
+                this.Description)
         }
 
     case "int64":
@@ -149,20 +173,36 @@ func (this *Option) AddToFlagSet(set *flag.FlagSet) error {
         }
 
         if this.Short != "" {
-            set.Int64Var(this.pointer.(*int64), this.Short, def, "")
+            set.Int64Var(
+                this.pointer.(*int64),
+                this.Short,
+                def,
+                this.Description)
         }
 
         if this.Long != "" {
-            set.Int64Var(this.pointer.(*int64), this.Long, def, "")
+            set.Int64Var(
+                this.pointer.(*int64),
+                this.Long,
+                def,
+                this.Description)
         }
 
     case "string":
         if this.Short != "" {
-            set.StringVar(this.pointer.(*string), this.Short, this.Default, "")
+            set.StringVar(
+                this.pointer.(*string),
+                this.Short,
+                this.Default,
+                this.Description)
         }
 
         if this.Long != "" {
-            set.StringVar(this.pointer.(*string), this.Long, this.Default, "")
+            set.StringVar(
+                this.pointer.(*string),
+                this.Long,
+                this.Default,
+                this.Description)
         }
 
     case "uint":
@@ -179,11 +219,19 @@ func (this *Option) AddToFlagSet(set *flag.FlagSet) error {
         }
 
         if this.Short != "" {
-            set.UintVar(this.pointer.(*uint), this.Short, uint(def), "")
+            set.UintVar(
+                this.pointer.(*uint),
+                this.Short,
+                uint(def),
+                this.Description)
         }
 
         if this.Long != "" {
-            set.UintVar(this.pointer.(*uint), this.Long, uint(def), "")
+            set.UintVar(
+                this.pointer.(*uint),
+                this.Long,
+                uint(def),
+                this.Description)
         }
 
     case "uint64":
@@ -198,11 +246,19 @@ func (this *Option) AddToFlagSet(set *flag.FlagSet) error {
         }
 
         if this.Short != "" {
-            set.Uint64Var(this.pointer.(*uint64), this.Short, def, "")
+            set.Uint64Var(
+                this.pointer.(*uint64),
+                this.Short,
+                def,
+                this.Description)
         }
 
         if this.Long != "" {
-            set.Uint64Var(this.pointer.(*uint64), this.Long, def, "")
+            set.Uint64Var(
+                this.pointer.(*uint64),
+                this.Long,
+                def,
+                this.Description)
         }
 
     default:
