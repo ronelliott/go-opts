@@ -22,11 +22,23 @@ type TestNewOptionStruct struct {
 
     nonExported string `short:"f"`
 
-    Count int `short:"c"`
-
     Name string `short:"n" env:"FLABBERGASTED"`
 
     Duck string `short:"d" env:"FLABBERGASTED" default:"quack"`
+
+    Bool bool `long:"bool"`
+
+    Float64 float64 `long:"float64"`
+
+    Int int `long:"int"`
+
+    Int64 int64 `long:"int64"`
+
+    String string `long:"string"`
+
+    Uint uint `long:"uint"`
+
+    Uint64 uint64 `long:"uint64"`
 }
 
 func optionTestGetFieldType(num int) reflect.StructField {
@@ -47,13 +59,91 @@ func TestNewOption_Default(t *testing.T) {
     assert.Equal(t, "true", opt.Default)
 }
 
-func TestNewOption_Default_CurrentValue(t *testing.T) {
+func TestNewOption_Default_CurrentValue_Bool(t *testing.T) {
     opts := TestNewOptionStruct{
-        Count: 192,
+        Bool: true,
     }
 
-    fieldType := reflect.TypeOf(&opts).Elem().Field(4)
-    fieldValue := reflect.ValueOf(&opts).Elem().Field(4)
+    fieldType := reflect.TypeOf(&opts).Elem().Field(6)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(6)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "true", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue_Float64(t *testing.T) {
+    opts := TestNewOptionStruct{
+        Float64: 3.14,
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(7)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(7)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "3.14", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue_Int(t *testing.T) {
+    opts := TestNewOptionStruct{
+        Int: 192,
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(8)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(8)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "192", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue_Int64(t *testing.T) {
+    opts := TestNewOptionStruct{
+        Int64: 192,
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(9)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(9)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "192", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue_String(t *testing.T) {
+    opts := TestNewOptionStruct{
+        String: "foo",
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(10)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(10)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "foo", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue_Uint(t *testing.T) {
+    opts := TestNewOptionStruct{
+        Uint: 192,
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(11)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(11)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "192", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue_Uint64(t *testing.T) {
+    opts := TestNewOptionStruct{
+        Uint64: 192,
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(12)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(12)
 
     opt, err := NewOption(fieldType, fieldValue)
     assert.Nil(t, err)
@@ -62,7 +152,7 @@ func TestNewOption_Default_CurrentValue(t *testing.T) {
 
 func TestNewOption_Default_Env(t *testing.T) {
     os.Setenv("FLABBERGASTED", "happy happy joy joy")
-    opt, err := NewOption(optionTestGetFieldType(5), optionTestGetFieldValue(5))
+    opt, err := NewOption(optionTestGetFieldType(4), optionTestGetFieldValue(4))
     assert.Nil(t, err)
     assert.Equal(t, "happy happy joy joy", opt.Default)
     os.Unsetenv("FLABBERGASTED")
@@ -70,14 +160,14 @@ func TestNewOption_Default_Env(t *testing.T) {
 
 func TestNewOption_Default_EnvOverride(t *testing.T) {
     os.Setenv("FLABBERGASTED", "happy happy joy joy ....")
-    opt, err := NewOption(optionTestGetFieldType(6), optionTestGetFieldValue(6))
+    opt, err := NewOption(optionTestGetFieldType(5), optionTestGetFieldValue(5))
     assert.Nil(t, err)
     assert.Equal(t, "happy happy joy joy ....", opt.Default)
     os.Unsetenv("FLABBERGASTED")
 }
 
 func TestNewOption_Default_EnvOverride_NoEnvSet(t *testing.T) {
-    opt, err := NewOption(optionTestGetFieldType(6), optionTestGetFieldValue(6))
+    opt, err := NewOption(optionTestGetFieldType(5), optionTestGetFieldValue(5))
     assert.Nil(t, err)
     assert.Equal(t, "quack", opt.Default)
 }
