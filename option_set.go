@@ -3,6 +3,7 @@ package opts
 import (
     "errors"
     "flag"
+    "io"
     "io/ioutil"
     "os"
     "reflect"
@@ -88,4 +89,13 @@ func (this *OptionSet) Parse(args []string) error {
     }
 
     return nil
+}
+
+// Writes the default options and descriptions to the given io.Writer
+func (this *OptionSet) WriteHelp(out io.Writer) {
+    this.flags.SetOutput(out)
+    this.flags.PrintDefaults()
+    // flags package outputs to os.Stderr in certain cases, stifle this by
+    // setting it to write to /dev/null
+    this.flags.SetOutput(ioutil.Discard)
 }

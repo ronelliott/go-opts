@@ -1,6 +1,7 @@
 package opts
 
 import (
+    "bytes"
     "github.com/stretchr/testify/assert"
     "testing"
 )
@@ -151,4 +152,18 @@ func TestOptionSetParse_LeftoverArgs_InvalidType(t *testing.T) {
     opts := TestInvalidOptionSetStruct{}
     _, err := NewOptionSet(&opts)
     assert.NotNil(t, err)
+}
+
+func TestOptionSetWriteHelp(t *testing.T) {
+    set, err := NewOptionSet(&TestOptionSetStruct{})
+    assert.Nil(t, err)
+    buf := bytes.Buffer{}
+    set.WriteHelp(&buf)
+    assert.Equal(
+        t,
+        "  -n string\n    \tThe name to use (default \"foo\")\n  " +
+        "-name string\n    \tThe name to use (default \"foo\")\n  " +
+        "-v\tUse verbose logging.\n  -verbose\n    \tUse verbose " +
+        "logging.\n",
+        buf.String())
 }
