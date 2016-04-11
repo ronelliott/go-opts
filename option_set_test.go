@@ -181,7 +181,7 @@ func TestOptionSetWriteHelp(t *testing.T) {
 
     // older versions of go (<1.5) have a different output
     // format
-    if curVer.LTE(minVer) {
+    if curVer.LT(minVer) {
         expected = "  -n=\"foo\": The name to use\n  -name=\"foo\": The name " +
             "to use\n  -v=false: Use verbose logging.\n  -verbose=false: " +
             "Use verbose logging.\n"
