@@ -3,6 +3,7 @@ package opts
 import (
     "bytes"
     "github.com/stretchr/testify/assert"
+    "runtime"
     "testing"
 )
 
@@ -159,11 +160,19 @@ func TestOptionSetWriteHelp(t *testing.T) {
     assert.Nil(t, err)
     buf := bytes.Buffer{}
     set.WriteHelp(&buf)
-    assert.Equal(
-        t,
-        "  -n string\n    \tThe name to use (default \"foo\")\n  " +
+
+    actual := "  -n string\n    \tThe name to use (default \"foo\")\n  " +
         "-name string\n    \tThe name to use (default \"foo\")\n  " +
         "-v\tUse verbose logging.\n  -verbose\n    \tUse verbose " +
-        "logging.\n",
-        buf.String())
+        "logging.\n"
+
+    // older versions of go (not sure exactly which) have a different output
+    // format
+    if runtime.Version() != "go1.6" {
+        actual = "-n=\"foo\": The name to use\n  -name=\"foo\": The name to " +
+            "use\n  -v=false: Use verbose logging.\n  -verbose=false: Use " +
+            "verbose logging.\n"
+    }
+
+    assert.Equal(t, actual, buf.String())
 }
