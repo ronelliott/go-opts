@@ -170,7 +170,7 @@ func TestOptionSetWriteHelp(t *testing.T) {
     // format
     if runtime.Version() != "go1.6" {
         expected = "  -n=\"foo\": The name to use\n  -name=\"foo\": The name " +
-            " to use\n  -v=false: Use verbose logging.\n  -verbose=false: " +
+            "to use\n  -v=false: Use verbose logging.\n  -verbose=false: " +
             "Use verbose logging.\n"
     }
 
