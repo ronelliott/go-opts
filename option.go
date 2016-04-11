@@ -51,17 +51,50 @@ func NewOption(fieldType reflect.StructField, fieldValue reflect.Value) (*Option
             "Cannot interface field address: " + fieldType.Name)
     }
 
+    kind := fieldType.Type.String()
+    pointer := ptrIface.Interface()
     tags := NewTagSet(string(fieldType.Tag))
+    def := tags["default"]
+
+    if def == "" {
+        // set the default to the current value
+    //     var ptr *[]string = opt.pointer.(*[]string)
+    //     *ptr = leftovers
+        switch kind {
+        case "bool":
+            var ptr *bool = pointer.(*bool)
+            def = strconv.FormatBool(*ptr)
+        case "float64":
+            var ptr *float64 = pointer.(*float64)
+            def = strconv.FormatFloat(*ptr, 'f', -1, 64)
+        case "int":
+            var ptr *int = pointer.(*int)
+            def = strconv.FormatInt(int64(*ptr), 10)
+        case "int64":
+            var ptr *int64 = pointer.(*int64)
+            def = strconv.FormatInt(*ptr, 10)
+        case "string":
+            var ptr *string = pointer.(*string)
+            def = *ptr
+        case "uint":
+            var ptr *uint = pointer.(*uint)
+            def = strconv.FormatUint(uint64(*ptr), 10)
+        case "uint64":
+            var ptr *uint64 = pointer.(*uint64)
+            def = strconv.FormatUint(*ptr, 10)
+        }
+    }
+
     opt := Option{
-        Default: tags["default"],
+        Default: def,
         Description: tags["description"],
         Help: tags["help"],
         Long: tags["long"],
         Name: fieldType.Name,
         Short: tags["short"],
         Tags: tags,
-        Type: fieldType.Type.String(),
-        pointer: ptrIface.Interface(),
+        Type: kind,
+        pointer: pointer,
     }
 
     if opt.IsPositional() && opt.Type != "[]string" {

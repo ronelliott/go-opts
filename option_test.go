@@ -20,6 +20,12 @@ type TestNewOptionStruct struct {
     InvalidArgs string `positional:"true"`
 
     nonExported string `short:"f"`
+
+    Count int `
+        description:"Use verbose logging."
+        help:"Be very talkative when logging"
+        long:"verbose"
+        short:"v"`
 }
 
 func optionTestGetFieldType(num int) reflect.StructField {
@@ -38,6 +44,19 @@ func TestNewOption_Default(t *testing.T) {
     opt, err := NewOption(optionTestGetFieldType(0), optionTestGetFieldValue(0))
     assert.Nil(t, err)
     assert.Equal(t, "true", opt.Default)
+}
+
+func TestNewOption_Default_CurrentValue(t *testing.T) {
+    opts := TestNewOptionStruct{
+        Count: 192,
+    }
+
+    fieldType := reflect.TypeOf(&opts).Elem().Field(4)
+    fieldValue := reflect.ValueOf(&opts).Elem().Field(4)
+
+    opt, err := NewOption(fieldType, fieldValue)
+    assert.Nil(t, err)
+    assert.Equal(t, "192", opt.Default)
 }
 
 func TestNewOption_NonAddressable(t *testing.T) {
