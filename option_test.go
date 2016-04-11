@@ -3,6 +3,7 @@ package opts
 import (
     "flag"
     "github.com/stretchr/testify/assert"
+    "os"
     "reflect"
     "testing"
 )
@@ -22,6 +23,10 @@ type TestNewOptionStruct struct {
     nonExported string `short:"f"`
 
     Count int `short:"c"`
+
+    Name string `short:"n" env:"FLABBERGASTED"`
+
+    Duck string `short:"d" env:"FLABBERGASTED" default:"quack"`
 }
 
 func optionTestGetFieldType(num int) reflect.StructField {
@@ -53,6 +58,28 @@ func TestNewOption_Default_CurrentValue(t *testing.T) {
     opt, err := NewOption(fieldType, fieldValue)
     assert.Nil(t, err)
     assert.Equal(t, "192", opt.Default)
+}
+
+func TestNewOption_Default_Env(t *testing.T) {
+    os.Setenv("FLABBERGASTED", "happy happy joy joy")
+    opt, err := NewOption(optionTestGetFieldType(5), optionTestGetFieldValue(5))
+    assert.Nil(t, err)
+    assert.Equal(t, "happy happy joy joy", opt.Default)
+    os.Unsetenv("FLABBERGASTED")
+}
+
+func TestNewOption_Default_EnvOverride(t *testing.T) {
+    os.Setenv("FLABBERGASTED", "happy happy joy joy ....")
+    opt, err := NewOption(optionTestGetFieldType(6), optionTestGetFieldValue(6))
+    assert.Nil(t, err)
+    assert.Equal(t, "happy happy joy joy ....", opt.Default)
+    os.Unsetenv("FLABBERGASTED")
+}
+
+func TestNewOption_Default_EnvOverride_NoEnvSet(t *testing.T) {
+    opt, err := NewOption(optionTestGetFieldType(6), optionTestGetFieldValue(6))
+    assert.Nil(t, err)
+    assert.Equal(t, "quack", opt.Default)
 }
 
 func TestNewOption_NonAddressable(t *testing.T) {

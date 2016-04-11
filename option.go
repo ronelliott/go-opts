@@ -4,6 +4,7 @@ import (
     "errors"
     "flag"
     "fmt"
+    "os"
     "reflect"
     "strconv"
 )
@@ -55,6 +56,13 @@ func NewOption(fieldType reflect.StructField, fieldValue reflect.Value) (*Option
     pointer := ptrIface.Interface()
     tags := NewTagSet(string(fieldType.Tag))
     def := tags["default"]
+    envVar := tags["env"]
+
+    if envVar != "" {
+        if val, ok := os.LookupEnv(envVar); ok {
+            def = val
+        }
+    }
 
     if def == "" {
         // set the default to the current value
