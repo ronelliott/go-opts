@@ -166,9 +166,10 @@ func TestOptionSetWriteHelp(t *testing.T) {
         "-v\tUse verbose logging.\n  -verbose\n    \tUse verbose " +
         "logging.\n"
 
-    // older versions of go (not sure exactly which) have a different output
+    // older versions of go (<1.5) have a different output
     // format
-    if runtime.Version() != "go1.6" {
+    version := runtime.Version()
+    if version != "go1.5" || version != "go1.6" {
         expected = "  -n=\"foo\": The name to use\n  -name=\"foo\": The name " +
             "to use\n  -v=false: Use verbose logging.\n  -verbose=false: " +
             "Use verbose logging.\n"
