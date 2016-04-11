@@ -21,11 +21,7 @@ type TestNewOptionStruct struct {
 
     nonExported string `short:"f"`
 
-    Count int `
-        description:"Use verbose logging."
-        help:"Be very talkative when logging"
-        long:"verbose"
-        short:"v"`
+    Count int `short:"c"`
 }
 
 func optionTestGetFieldType(num int) reflect.StructField {
