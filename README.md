@@ -53,3 +53,5 @@ func main() {
     fmt.Println("Options.Verbose:", options.Verbose)
 }
 ```
+
+[![Analytics](https://ga-beacon.appspot.com/UA-59523757-2/go-opts/readme?pixel)](https://github.com/igrigorik/ga-beacon)
