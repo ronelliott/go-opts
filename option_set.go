@@ -67,6 +67,11 @@ func NewOptionSet(data interface{}) (*OptionSet, error) {
 	return &set, nil
 }
 
+// Checks if the OptionSet has options
+func (this *OptionSet) HasOptions() bool {
+	return len(this.Options) != 0
+}
+
 // Parses the given args using this OptionSet
 func (this *OptionSet) Parse(args []string) error {
 	if args == nil {

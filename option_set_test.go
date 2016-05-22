@@ -44,6 +44,8 @@ type TestInvalidOptionSetStruct struct {
         short:"v"`
 }
 
+type TestEmptyOptionSetStruct struct {}
+
 type TestParseDefaultArgsStruct struct {
 	CoverageOut     string `long:"test.outputdir"`
 	CoverageProfile string `long:"test.coverprofile"`
@@ -81,6 +83,16 @@ func TestNewOptionSet_NonPointer(t *testing.T) {
 func TestNewOptionSet_InvalidDefault(t *testing.T) {
 	_, err := NewOptionSet(&TestInvalidDefaultOptionSetStruct{})
 	assert.NotNil(t, err)
+}
+
+func TestOptionSet_HasOptions(t *testing.T) {
+	set, err := NewOptionSet(&TestOptionSetStruct{})
+	assert.Nil(t, err)
+	assert.True(t, set.HasOptions())
+
+	set, err = NewOptionSet(&TestEmptyOptionSetStruct{})
+	assert.Nil(t, err)
+	assert.False(t, set.HasOptions())
 }
 
 func TestOptionSetParse_DefaultArgs(t *testing.T) {
