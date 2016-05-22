@@ -1,21 +1,21 @@
 package opts
 
 import (
-    "github.com/stretchr/testify/assert"
-    "testing"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 type TestParseStruct struct {
-    Args []string `positional:"true"`
+	Args []string `positional:"true"`
 
-    Name string `
+	Name string `
         default:"foo"
         description:"The name to use"
         help:"What do you want to name this thing?"
         long:"name"
         short:"n"`
 
-    Verbose bool `
+	Verbose bool `
         default:"false"
         description:"Use verbose logging."
         help:"Be very talkative when logging"
@@ -24,16 +24,16 @@ type TestParseStruct struct {
 }
 
 type TestParseInvalidStruct struct {
-    Args string `positional:"true"`
+	Args string `positional:"true"`
 
-    Name string `
+	Name string `
         default:"foo"
         description:"The name to use"
         help:"What do you want to name this thing?"
         long:"name"
         short:"n"`
 
-    Verbose bool `
+	Verbose bool `
         default:"false"
         description:"Use verbose logging."
         help:"Be very talkative when logging"
@@ -42,16 +42,16 @@ type TestParseInvalidStruct struct {
 }
 
 func TestParse_Valid(t *testing.T) {
-    opts := TestParseStruct{}
-    err := Parse(&opts, []string{"-v", "--name", "bar", "duck", "sauce"})
-    assert.Nil(t, err)
-    assert.True(t, opts.Verbose)
-    assert.Equal(t, "bar", opts.Name)
-    assert.Equal(t, []string{"duck", "sauce"}, opts.Args)
+	opts := TestParseStruct{}
+	err := Parse(&opts, []string{"-v", "--name", "bar", "duck", "sauce"})
+	assert.Nil(t, err)
+	assert.True(t, opts.Verbose)
+	assert.Equal(t, "bar", opts.Name)
+	assert.Equal(t, []string{"duck", "sauce"}, opts.Args)
 }
 
 func TestParse_Invalid(t *testing.T) {
-    opts := TestParseInvalidStruct{}
-    err := Parse(&opts, []string{"-v", "--name", "foo", "ducks"})
-    assert.NotNil(t, err)
+	opts := TestParseInvalidStruct{}
+	err := Parse(&opts, []string{"-v", "--name", "foo", "ducks"})
+	assert.NotNil(t, err)
 }
