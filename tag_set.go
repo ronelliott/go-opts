@@ -31,7 +31,8 @@ func NewTagSet(raw string) TagSet {
 		}
 
 		if rune == '"' && in_value {
-			set[strings.Trim(key, " ")] = value
+			trimmed := strings.Trim(strings.Trim(key, " "), "\t")
+			set[trimmed] = value
 			key = ""
 			value = ""
 			in_value = false
