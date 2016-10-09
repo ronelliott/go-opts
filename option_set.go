@@ -74,7 +74,7 @@ func (this *OptionSet) HasOptions() bool {
 	}
 
 	for _, opt := range this.Options {
-		if !opt.Tags.Has("positional") {
+		if !opt.IsPositional() {
 			return true
 		}
 	}
@@ -89,7 +89,7 @@ func (this *OptionSet) HasPositional() bool {
 	}
 
 	for _, opt := range this.Options {
-		if opt.Tags.Has("positional") {
+		if opt.IsPositional() {
 			return true
 		}
 	}
