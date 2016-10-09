@@ -69,7 +69,32 @@ func NewOptionSet(data interface{}) (*OptionSet, error) {
 
 // Checks if the OptionSet has options
 func (this *OptionSet) HasOptions() bool {
-	return len(this.Options) != 0
+	if len(this.Options) == 0 {
+		return false
+	}
+
+	for _, opt := range this.Options {
+		if !opt.Tags.Has("positional") {
+			return true
+		}
+	}
+
+	return false
+}
+
+// Checks if the OptionSet has positional arguments
+func (this *OptionSet) HasPositional() bool {
+	if len(this.Options) == 0 {
+		return false
+	}
+
+	for _, opt := range this.Options {
+		if opt.Tags.Has("positional") {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Parses the given args using this OptionSet
