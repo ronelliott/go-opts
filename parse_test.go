@@ -1,7 +1,7 @@
 package opts
 
 import (
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
@@ -44,14 +44,14 @@ type TestParseInvalidStruct struct {
 func TestParse_Valid(t *testing.T) {
 	opts := TestParseStruct{}
 	err := Parse(&opts, []string{"-v", "--name", "bar", "duck", "sauce"})
-	assert.Nil(t, err)
-	assert.True(t, opts.Verbose)
-	assert.Equal(t, "bar", opts.Name)
-	assert.Equal(t, []string{"duck", "sauce"}, opts.Args)
+	require.Nil(t, err)
+	require.True(t, opts.Verbose)
+	require.Equal(t, "bar", opts.Name)
+	require.Equal(t, []string{"duck", "sauce"}, opts.Args)
 }
 
 func TestParse_Invalid(t *testing.T) {
 	opts := TestParseInvalidStruct{}
 	err := Parse(&opts, []string{"-v", "--name", "foo", "ducks"})
-	assert.NotNil(t, err)
+	require.NotNil(t, err)
 }
